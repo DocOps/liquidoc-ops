@@ -27,8 +27,6 @@ To learn more about the plan, see the new https://www.agyl.org[landing page].
 .The LiquiDoc Ops Ecosystem
 image::https://www.agyl.dev/img/agyl-ghaanja-diagram.png[]
 
-toc::[]
-
 The rest of this document is pretty well subject to change, but I have been fielding a lot of requests and figured it makes sense to put it all in one place.
 What could go wrong?
 
@@ -48,14 +46,12 @@ The following major components lined up for release:
 Right now, all of these projects are interdependent, which makes for a challenging prototype, but as each component emerges, updates will be posted here.
 
 Collaboration, contributions, and sponsorship will be eagerly entertained.
-Please get in touch with project lead, Brian Dominick:
+Please get in touch with project lead, *Brian Dominick*:
 
-[frame=none,grid=none,cols='1a,1a,1a',width='100%']
-|===
-| icon:twitter[] link:https://twitter.com/_codewriter[@_codewriter]
-| icon:globe[] link:https://www.codewriting.org/contact[codewriting.org]
-| icon:slack[] link:https://writethedocs.slack.com[Slack]
-|===
+[horizontal]
+Twitter:: link:https://twitter.com/_codewriter[@_codewriter]
+Homepage:: link:https://www.codewriting.org/contact[codewriting.org]
+Slack:: link:https://writethedocs.slack.com[Write the Docs]
 
 == Technical Preview
 
@@ -74,4 +70,7 @@ image::docs/assets/images/docops-overview-macro-basic.png[]
 image::docs/assets/images/docops-overview-macro-advanced.png[]
 
 ==== The Customer-forkable Future of DocOps
+
+This is a little bonus, as I'm still looking for the software organization that wants to enable *enterprise customers* to build and deploy a customized, *environment-specific edition* of their product's docs.
+
 image::docs/assets/images/docops-overview-macro-future-forkable.png[]
