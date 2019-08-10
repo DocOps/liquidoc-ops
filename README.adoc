@@ -1,0 +1,83 @@
+= LiquiDoc Ops
+:idprefix:
+:idseparator: -
+ifndef::env-github[]
+:icons: font
+:toc: left
+endif::[]
+ifdef::env-github,env-browser[]
+:toc: macro
+:toclevels: 2
+endif::[]
+ifdef::env-github[]
+:!toc-title:
+:caution-caption: :fire:
+:important-caption: :exclamation:
+:note-caption: :paperclip:
+:tip-caption: :bulb:
+:warning-caption: :warning:
+endif::[]
+
+In Fall 2019, this space will become the new home of the link:https://github.com/DocOps/liquidoc-cmf[LiquiDoc Content Management Framework] project, now to be called simply *LiquiDoc Ops* or *LDOps* for short.
+The developer has spent the summer revamping various dependencies and adding a major new one.
+Updates will be posted here and on https://twitter.com/_codewriting[Twitter] in the meantime.
+
+To learn more about the plan, see the new https://www.agyl.org[landing page].
+
+.The LiquiDoc Ops Ecosystem
+image::https://www.agyl.dev/img/agyl-ghaanja-diagram.png[]
+
+toc::[]
+
+The rest of this document is pretty well subject to change, but I have been fielding a lot of requests and figured it makes sense to put it all in one place.
+What could go wrong?
+
+In any case, everything below is where I think things are going, but I'm working agile and lean, and very fast, so this is subject to change, and it could take a week or more to get updated.
+
+== High-level Roadmap
+
+The following major components lined up for release:
+
+. *LiquiDoc*, the AGYL CLI utility, release 0.12.0 with new GraphQL and Liquid powers.
+. *Ganja*, the new DocOps CLI that will ship with LiquiDoc, GitHub, Netlify, and Algolia integrations.
+. The *LiquiDoc Ops framework* codebase itself, including a basic specification, boilerplate templates, schemas, scripts, and other libraries.
+. A LiquiDoc-ready Jekyll layout/theme set, tentatively called *DocOps Reboot*, for generating a complete documentation site, including a REST API reference and a YAML/Liquid/AsciiDoc-driven landing page theme.
+. The complete, fork-ready *LiquiDoc Ops Guideset*, a full-featured LDOps implementation that serves as complete documentation for using an LDOps application.
+. Work on various supporting components and dependencies, including a couple of whitepapers, the project landing page (which will fold into the Guideset project at launch), and all the networking and conference calls it takes to get people interested in such collaborations.
+
+Right now, all of these projects are interdependent, which makes for a challenging prototype, but as each component emerges, updates will be posted here.
+
+Collaboration, contributions, and sponsorship will be eagerly entertained.
+Please get in touch with project lead, Brian Dominick:
+
+[frame=none,grid=none,cols='1a,1a,1a',width='100%']
+|===
+| icon:twitter[] link:https://twitter.com/_codewriter[@_codewriter]
+| icon:globe[] link:https://www.codewriting.org/contact[codewriting.org]
+| icon:slack[] link:https://writethedocs.slack.com[Slack]
+|===
+
+== Technical Preview
+
+I will try to keep this space updated, but most of this content will be going straight to white paper.
+
+We'll start with some diagrams, and hopefully more will arrive throughout August.
+
+=== Generic DocOps Infrastructure Diagrams
+
+This probably is not genericized enough, but for what it's worth, these are some depictions of how I see DocOps, from source to deployment.
+
+.Basic DocOps Infrastructure
+====
+image::docs/assets/images/docops-overview-macro-basic.png[]
+====
+
+.Advanced/Detailed DocOps Infrastructure
+====
+image::docs/assets/images/docops-overview-macro-advanced.png[]
+====
+
+.The Customer-forkable Future of DocOps
+====
+image::docs/assets/images/docops-overview-macro-future-forkable.png[]
+====
