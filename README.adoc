@@ -1,8 +1,8 @@
 = LiquiDoc Ops
 :idprefix:
 :idseparator: -
-ifndef::env-github[]
 :icons: font
+ifndef::env-github[]
 :toc: left
 endif::[]
 ifdef::env-github,env-browser[]
@@ -67,17 +67,11 @@ We'll start with some diagrams, and hopefully more will arrive throughout August
 
 This probably is not genericized enough, but for what it's worth, these are some depictions of how I see DocOps, from source to deployment.
 
-.Basic DocOps Infrastructure
-====
+==== Basic DocOps Infrastructure
 image::docs/assets/images/docops-overview-macro-basic.png[]
-====
 
-.Advanced/Detailed DocOps Infrastructure
-====
+==== Advanced/Detailed DocOps Infrastructure
 image::docs/assets/images/docops-overview-macro-advanced.png[]
-====
 
-.The Customer-forkable Future of DocOps
-====
+==== The Customer-forkable Future of DocOps
 image::docs/assets/images/docops-overview-macro-future-forkable.png[]
-====
