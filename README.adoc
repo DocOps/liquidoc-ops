@@ -72,7 +72,7 @@ I suspect a parallel structure/strategy in the Python/Sphinx world could bear fr
 
 image::docs/assets/images/docops-overview-macro-basic.png[]
 
-Believe it or not, the lynchpin of DocOps is data markup.
+Believe it or not, the linchpin of DocOps is data markup.
 Storing canonical product data as YAML, JSON, or even XML or CSV is the best way to make sure everyone (and crucially every part of every build) has ready access to it this canonical info.
 
 Every fact should be stored in one place.
