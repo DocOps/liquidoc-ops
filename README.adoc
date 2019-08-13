@@ -18,7 +18,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 :landing-page_url: https://www.agyl.dev
-:landing-page_link: link:{landing-pagee_url}[landing page]
+:landing-page_link: link:{landing-page_url}[landing page]
 
 In Fall 2019, this space will become the new home of the link:https://github.com/DocOps/liquidoc-cmf[LiquiDoc Content Management Framework] project, now to be called simply *LiquiDoc Ops* or *LDOps* for short.
 The developer has spent the summer revamping various dependencies and adding a major new one.
