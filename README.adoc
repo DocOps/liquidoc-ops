@@ -27,7 +27,7 @@ Updates will be posted here and on https://twitter.com/_codewriting[Twitter] in 
 To learn more about the plan, see the new {landing-page_link}.
 
 .The LiquiDoc Ops Ecosystem
-image::https://www.agyl.dev/img/agyl-ghaanja-diagram.png[]
+image::https://www.agyl.dev/images/agyl-ghaanja-diagram.png[]
 
 The rest of this document is pretty well subject to change, but I have been fielding a lot of requests and figured it makes sense to put it all in one place.
 What could go wrong?
