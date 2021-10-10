@@ -1,0 +1,187 @@
+# This document establishes dataset of admonition block object schemas
+schema:
+  properties:
+    _meta:
+      key: id
+      req: [id,cue]
+      acc: [id,cue,txt,use,not,form,see]
+    id:
+    cue: # a slug/key for this element type
+    txt: # a label for this element type
+    use: # a description of how this element type is to be used
+    not: # a description of how this element type is NOT to be used
+    form: # the expected shape of
+    ext: # Boolean: this object defines a custom extension of AsciiDoc
+      value:
+        type: Boolean
+    see: # Array referencing other element cues for association (as in, see also)
+      value:
+        type: Array
+records:
+  # AsciiDoc (Docbook) official admonitions, with LiquiDoc Ops definitions
+  - id: note
+    cue: NOTE
+    txt: A general note admonition
+    use: This admonition contains fully relevant information that does not fit the flow of the page.
+    not: _Not_ for stuff that's cool but irrelevant (see: COOL).
+    form:
+      src:
+        rej: "NOTE: " # enforces multi-line block with [NOTE] header
+        det: "^\[NOTE"
+      html:
+        det: .admonition.note # CSS to identify a NOTE-styled note in rendered output
+
+  - id: tip
+    cue: TIP
+    txt: A tip admonition
+    use: This admonition contains a _novel_ insight pertaining to _improved use_ of the subject matter.
+    not: Tips are not for workarounds! They are for officially supported ways to use the product with greater efficacy.
+    form:
+      src:
+        rej: "TIP: |Tip: "
+        det: "^\[TIP"
+      html:
+        det: .admonition.tip
+
+  - id: important
+    cue: IMPORTANT
+    txt: Notes an often overlooked or mispresumed-to-be-standard element of content.
+    use: This admonition points to something that many users might otherwise miss or is explains something commonly misunderstood.
+    not: Important calls for focus, _not alarm_.
+    form:
+      src:
+        rej: "IMPORTANT: |Important: "
+        det: "^\[IMPORTANT"
+      html:
+        det: .admonition.important
+
+  - id: caution
+    cue: CAUTION
+    txt: This component, feature, or task carries special dangers if implemented wrongly.
+    use: This item _can_ lead to harm if instructions are not carried out precisely or at least with care.
+    form:
+      src:
+        rej: "CAUTION: |Caution: "
+        det: "^\[CAUTION"
+      html:
+        det: .admonition.caution
+
+  - id: warning
+    cue: WARNING
+    txt: This component, feature, or task carries inherent risk; user discretion advised.
+    use: |
+      "`Even proper implementation/use of this carries risk deserving of note.`"
+    form:
+      src:
+        rej: "WARNING: |Warning: "
+        det: "^\[WARNING"
+      html:
+        det: .admonition.warning
+
+  # Custom LiquiDoc Ops admonitons
+
+  - id: notice
+    cue: NOTICE
+    txt: An official announcement, such as a deprecation or legal statement.
+    use: Used for a more formal/official
+    ext: true
+    icon: fa-bullhorn
+    form:
+      src:
+        rej: "NOTICE:"
+        det: "^\[Notice"
+      html:
+        det: .admonition.notice
+
+  - id: fastpath
+    cue: FASTPATH
+    txt: Under at least some (noted) circumstances, this task or step will save time.
+    use: Used for quickstart guides or wherever work can be skipped or templated.
+    ext: true
+    icon: fa-fast-forward
+    form:
+      src:
+        rej: "FASTPATH: |Fastpath: "
+        det: "^\[FASTPATH"
+      html:
+        det: .admonition.fastpath
+
+  - id: version
+    cue: VERSION
+    txt: Flags divergent content; optionally combined with class syntax and a toggle to restrict audiences that see it.
+    use: Highlight for readers that they are seeing content that may not apply to them.
+    ext: true
+    icon: fa-code-fork
+    form:
+      src:
+        rej: "VERSION: |Version: "
+        det: "^\[VERSION"
+      html:
+        det: .admonition.version
+
+  - id: limit
+    cue: LIMIT
+    txt: Function or capacity restriction notice, including known bugs and imposed (tiered) ceilings.
+    ext: true
+    icon: fa-hourglass
+    form:
+      src:
+        rej: "LIMIT: |Limit: "
+        det: "^\[LIMIT"
+      html:
+        det: .admonition.limit
+
+  - id: workaround
+    cue: WORKAROUND
+    txt: This is an unofficial means of configuration or operation that works as advertised.
+    use: Almost always used in conjunction with a stated LIMIT.
+    ext: true
+    icon: fa-map
+    form:
+      src:
+        rej: "WORKAROUND: |Workaround: "
+        det: "^\[WORKAROUND"
+      html:
+        det: .admonition.workaround
+
+  - id: question
+    cue: QUESTION
+    txt: Poses an interrogative that prompts the reader to stop and think or actually respond to a challenge.
+    use: >
+      Must be used consistently and lightly.
+      If you want to make a quiz or pose a complex challenge, use another block type altogether.
+    ext: true
+    icon: fa-question-circle-o
+    form:
+      src:
+        rej: "QUESTION: |Question: "
+        det: "^\[WORKAROUND"
+      html:
+        det: .admonition.question
+
+  - id: cool
+    cue: COOL
+    txt: Highlights a feature for marketing or bragging purposes.
+    not: Not to be used in reference matter.
+    ext: true
+    icon: fa-snowflake
+    form:
+      src:
+        rej: "^COOL: |^Cool: "
+        det: "^\[^COOL"
+      html:
+        det: .admonition.cool
+
+  - id: fact
+    cue: FACT
+    txt: Simply delivers a fact.
+    use: Only to be used in educational matter.
+    not: Not to be used in non-educational or reference matter.
+    ext: true
+    icon: fa-hand-o-right
+    form:
+      src:
+        rej: "^FACT: |^Fact: "
+        det: "^\[FACT"
+      html:
+        det: .admonition.fact

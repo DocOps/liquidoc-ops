@@ -1,0 +1,79 @@
+# Edit this file to include (only) the types you wish to support in your
+#  LiquiDoc Ops instance.
+# The slug property sets the default for how the type is expressed in URLs
+# E.g., API reference URLs look like <docsite>/<prod>/<topic-slug>-api-reference
+# This can be overwritten with the type-slug property.
+# Slugs can be duplicates so long as the types will never be used with the same
+#  core slug in the same path
+types:
+# tag::topic-types[]
+  i:
+    name: index
+    slug: ""
+    desc: any index/landing page for a set of topics
+  t:
+    name: task
+    desc: any instructions containing steps
+  th:
+    name: how-to
+    desc: specific, task-oriented instructions
+  tl:
+    name: tutorial
+    desc: learning-based, conceptual instructions
+  tr:
+    name: recipe
+    desc: complicated instructions with variables
+  ts:
+    name: troubleshooter
+    desc: series of steps to analyze/resolve a problem
+  r:
+    name: reference
+    desc: a general reference topic
+  ra:
+    name: API reference
+    slug: api-reference
+    desc: for APIs, SDKs, and configurations
+  rd:
+    name: dictionary
+    desc: a collection of terms and metadata about them
+  rq:
+    name: requirements listing
+    slug: requirements
+    desc: a table or other list of dependencies
+  rs:
+    name: specification
+    desc: a structured document intended to define something complex
+  rm:
+    name: reference model
+    slug: reference-model
+    desc: diagrams, charts, etc for reference or definition
+  rg:
+    name: reference guide
+    slug: reference
+    desc: a loose/mixed-format article of reference/conceptual material
+  c:
+    name: concept
+    slug: intro
+    desc: a topic that is mostly descriptive or explanatory prose
+  co:
+    name: about or overview
+    slug: overview
+    desc: introductory/orientation matter
+  cx:
+    name: explainer
+    desc: a deeper dive into a subject
+  cm:
+    name: conceptual model
+    slug: model
+    desc: paints an abstract picture (not for reference/specification)
+# end::topic-types[]
+# # diataxis types
+#   t:
+#     name: tutorial
+#   h:
+#     name: how-to
+#   r:
+#     name: reference
+#   x:
+#     name: explanation
+#

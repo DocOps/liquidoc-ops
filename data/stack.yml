@@ -1,0 +1,295 @@
+# AGYL-GHAANJA
+# The LiquiDoc Ops technology stack
+#
+# AGYL DocStack
+#
+languages:
+  core:
+    - lang: AsciiDoc
+      class: content markup
+      roles: [docpro,admin]
+      desc:
+        short: The discerning documentarian's lightweight markup format
+        long: >
+          The only markup language that thrills engineers and tech writers alike, AsciiDoc offers structured, semantic text in a standardized format.
+          It's like if Markdown were designed by world-class engineers for pro-grade writing about software documentation, including dynamic features such as conditionalized content, variable substitution, and external source inclusion.
+        fit: >
+          A docs-as-code platform requires a lightweight markup format, and AsciiDoc is the best of these for structured, dynamic technical content.
+      resources:
+        - url: https://asciidoctor.org/why-asciidoc
+
+    - lang: YAML
+      class: small-data markup
+      roles: [docpro,admin]
+      desc:
+        short: Extremely lightweight format for version-controllable data
+        long: |
+          For storing product data in version-controlled flat files accessible to writers and engineers, it's YAML to the rescue.
+          Jekyll and other apps use YAML for configuration, so it's our one-stop shop for configs and small data.
+      resources:
+        - url: https://asciidoctor.org/why-asciidoc
+
+    - lang: Liquid
+      class: templating markup
+      roles: [admin]
+      desc:
+        short: Combine data, code, and text to generate anything
+        long: |
+          In use around the Web, Shopify's wickedly extensible, tag-based preprocessing language lets us massage small data into content, or else to restructure it.
+          Jekyll uses Liquid for site layout and styling; LiquiDoc employs it for prebuilding AsciiDoc source files from small data.
+      resources:
+        - url: https://asciidoctor.org/why-asciidoc
+
+    # - lang: GraphQL
+    #   class: data query language
+    #   roles: [admin]
+    #   desc:
+    #     short: Gather and shape data from virtually any source
+    #     long: |
+    #       The future of remote API querying is yours today, for ingesting product information and reshapting it into extremely useful data arrays.
+    #       With some up-front planning, writers can have powerful tools for expressing tabular and other product data, including API references.
+    #   resources:
+    #     - url: https://asciidoctor.org/why-asciidoc
+
+  secondary:
+    - lang: Regular Expressions
+      short: RegEx
+      class: textual pattern matcher
+
+    - lang: JavaScript
+      short: JS
+      class: front-end functionality
+
+    - lang: Sass
+      class: CSS sourcing
+
+    - lang: OpenAPI
+      short: OAS3
+      class: REST API source
+#
+# GHAANJA Toolchain
+#
+#
+applications:
+  core:
+
+    - app: Git
+      class: source control system
+      roles: [docpro,admin]
+      desc:
+        short: All the versioning enjoyed by product devs, for docs
+        long: |
+          No modern product documentation project can go without version control, and the only name in version control is Git.
+          Engineers use it to track released editions and versions of the product; the docs can fall into line as well.
+      policy: FOSS
+
+    - app: GitHub
+      class: project platform
+      roles: [docpro,admin]
+      desc:
+        short: Git-hosting, issue tracking, draft reviews in the browser
+        long: |
+          For any small- to mid-sized operation, GitHub has your project-management and source-management needs covered.
+          It's the most trusted name in source hosting, with a web UI that works as a content-management interface.
+      policy: freemium
+      alternatives:
+        - app: GitLab
+          url: https://about.gitlab.com
+        - app: BitBucket
+          url: https://bitbucket.org
+
+    - app: Atom
+      class: content & data editor
+      roles: [docpro]
+      desc:
+        short: A cross-platform code editor with strong integrations
+        long: |
+          GitHub's fully open-source and cross-platform code editor has excellent integration and seems to be the general preference of AsciiDoc writers.
+      resources:
+        - url: https://atom.io
+      policy: FOSS
+      alternatives:
+        - app: VS Code
+          url: https://code.visualstudio.com
+        - app: AsciiDocFX
+          url: https://asciidocfx.com
+        - app: IntelliJ IDEA
+          url: https://www.jetbrains.com/idea/
+        - app: Any decent code editor
+
+    - app: Algolia
+      class: search platform
+      roles: [admin]
+      desc:
+        short: A powerful, freemium search platform
+        long: |
+          Offering advanced, highly configurable, cloud-based search, Algolia is tailored to your needs.
+          LiquiDoc Ops integrates with Algolia tooling to provide versioned indexes and instant results in version-specific contexts.
+      resources:
+        - url: https://www.algolia.com
+      policy: freemium
+      alternatives:
+        - app: Swiftype
+          url: https://swiftype.com/site-search
+        - app: Elastic
+          url: https://www.elastic.co/cloud/site-search-service
+        - app: Solr
+          url: https://lucene.apache.org/solr/
+
+    - app: Netlify
+      class: deployment platform
+      roles: [admin]
+      desc:
+        short: A full-featured continuous-integration & -deployment platform
+        long: |
+          This full-featured continuous-integration & -deployment platform has an incredible reputation among DocOps practitioners.
+          We love its pricetag (usually nonexistent) nearly as much as its ease of use, jaw-dropping integrations, stellar support, big open-source contributions, and wicked good docs.
+      resources:
+        - url: https://www.netlify.com
+      policy: freemium
+      alternatives:
+        - app: Amazon S3
+          url: https://aws.amazon.com/s3/
+        - app: GitHub Pages
+          url: https://pages.github.com/
+        - app: Vercel
+          url: https://vercel.com
+        - app: Statically
+          url: https://statically.io
+
+    - app: Jekyll
+      class: static-site generator
+      roles: [admin]
+      desc:
+        short: The industry-leading SSG, driven by AsciiDoc, YAML, and Liquid
+        long: |
+          The SSG with the biggest community and the baddest ass extensions gets even better with LiquiDoc Ops.
+          Natively driven by Liquid and YAML, Jekyll is an AsciiDoc powerhouse with the biggest onramp and minimal barriers, progressively overcome by LiquiDoc.
+      resources:
+        - url: https://jekyllrb.com
+        - url: https://github.com/jekyll/jekyll
+      policy: FOSS
+
+    - app: Asciidoctor
+      class: content converter
+      roles: [admin]
+      desc:
+        short: The revolutionary AsciiDoc toolchain
+        long: |
+          Asciidoctor provides an incredible suite of tools and guides that constantly improve the AsciiDoc user experience.
+          Having revived the AsciiDoc language in 2012, the Asciidoctor organization is now driving the language's formal specification under Eclipse Foundation.
+      resources:
+        - url: https://asciidoctor.org
+        - url: https://github.com/asciidoctor/asciidoctor
+      policy: FOSS
+
+    - app: LiquiDoc
+      class: build utility
+      roles: [admin]
+      desc:
+        short: The documentation admin's one tool to rule them all
+        long: |
+          A highly configurable automation tool, LiquiDoc gathers and precompiles documentation sources before performing iterative build routines.
+          Admins use LiquiDoc to program build routines; writers invoke it only via Ganja.
+      resources:
+        - url: https://www.agyl.org/liquidoc
+        - url: https://github.com/DocOps/liquidoc-gem
+      policy: FOSS
+
+    - app: Clide
+      class: command-line wrangler
+      roles: [docpro,admin]
+      desc:
+        short: Simplifies LiquiDoc and other commands for writers
+        long: |
+          Clide pulls together all the local and cloud-based apps used in the stack, pushing them to the background.
+          With very few arguments and a wizard-like interface, the `ganja` command performs operations preconfigured by admins for the few things you need to create, manage, review, and publish content in your environment.
+      resources:
+        - url: https://www.agyl.org/getganja
+        - url: https://github.com/DocOps/ganja-gem
+      policy: FOSS
+
+  secondary:
+
+    - app: Pandoc
+      class: document converter
+      roles: [docpro]
+      desc:
+        short: Anything in, anything out, 1:1 file-conversion utility
+        long: |
+          Pandoc is arguably the most common answer to "How do I..." questions in documentation management.
+          The Swiss Army Knife of digital doc formats, Pandoc can be scripted into any docs-as-code workflow.
+      resources:
+        - url: https://github.com/jgm/pandoc
+        - url: https://pandoc.org/
+      policy: FOSS
+
+    - app: OpenAPI Generator
+      class: RESTful API documentation converter (OpenAPI)
+      roles: [docpro]
+      desc:
+        short: Converts OAS3-structured content to AsciiDoc and interactive HTML
+        long: >
+          OpenAPI Specification 3 (OAS3) is the optimal way to source RESTful APIs.
+          From this source, you can generate rich-text documentation as well as servers and clients for your APIs.
+      policy: FOSS
+      alternatives:
+        - app: Redocly
+          url: https://redoc.ly
+        - app: Swagger
+          url: https://swagger.io
+
+
+
+
+integrations:
+  # Structure: annotated keystore
+  # An unconventional small-data format suitable for ready matching of
+  #  key pairs, including with annotations for each element in each pair
+  # The object is an Array of hashes, each with at least a pair of keys
+  #  and optionally an `id:` property.
+  # The keys serve as the paired
+  # AsciiDoc, GraphQL, YAML, Liquid
+  # Git, GitHub, Atom, Algolia, Netlify, Jekyll, Asciidoctor
+  - asciidoctor: provides extensive tooling for
+    asciidoc:
+  - asciidoctor: provides an AsciiDoc converter for
+    jekyll:
+  - jekyll:      processes content sourced in
+    asciidoc:
+  - jekyll:      is configured in
+    yaml:        provides primary data sourcing for
+  - jekyll:      natively supports HTML layouts and partials with
+    liquid:
+  - github:      natively renders content sourced in
+    asciidoc:
+  - algolia:     supports search integration for
+    jekyll:
+  - netlify:     extensively depends on the API for
+    github:
+  - github:      owns and maintains the open-source tool
+    atom:        integrates natively with
+  - atom:        has syntax highlighting and utilities for
+    yaml:
+  - atom:        gracefully displays and integrates with
+    asciidoc:    provides syntax highlighting and utilities for
+  - atom:        natively interfaces with
+    git:
+  - asciidoctor: provides AsciiDoc language extensions for
+    atom:
+  - netlify:     accepts configuration in
+    yaml:
+  - liquidoc:
+    asciidoc:
+  - liquidoc:    processes AsciiDoc with
+    asciidoctor:
+  - liquidoc:    generates complex source and config files for
+    jekyll:
+  - liquidoc:    is fully integrated with, and even extends
+    yaml:        serves as primary config and source format
+  - liquidoc:    is fully integrated with and heavily extends
+    liquid:
+  - liquidoc:    processes dynamic schemas for
+    graphql:     enables data manipulation in
+  - liquidoc:    streamlines management of and queries to
+    algolia:

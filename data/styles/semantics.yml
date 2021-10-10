@@ -1,0 +1,50 @@
+schema:
+  properties:
+    _meta:
+      key: id
+      req: [id,cue,quo]
+      acc: [id,cue,txt,use,quo,not,form,see]
+    id:
+    cue: # a slug/key for this span type
+    txt: # a label for this element type
+    use: # a description of how this element type is to be used
+    not: # a description of how this element type is NOT to be used
+    form: # the expected shape of
+    ext: # Boolean: this object defines a custom extension of AsciiDoc
+      value:
+        type: Boolean
+    see: # Array referencing other element cues for association (as in, see also)
+      value:
+        type: Array
+records:
+  - cue: cli
+    txt: commandline
+    use: Command names and commandlin arguments inside normal text.
+    quo: "`"
+  - cue: gui
+    txt: gui
+    use: For _labels_ in a graphical user interfaces and forms.
+    quo: "*"
+  - cue: term
+    txt: term
+    use: First use per-topic of any term in the terms list.
+  - cue: path
+    txt: path
+    use: For a file path or filename.
+    quo: "`"
+  - cue: url
+    txt: url
+    use: For a non-linking URL.
+    quo: "`"
+  - cue: cite
+    txt: citation
+    use: For references to significant other works queued in a registry.
+    quo: "_"
+  - cue: app
+    txt: application
+    use: A product name with a registered description, URL, etc.
+    quo: "#"
+  - cue: tm
+    txt: trademark
+    use: For first mention of trademarked term.
+    quo: "#"

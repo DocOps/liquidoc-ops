@@ -1,0 +1,930 @@
+= LiquiDoc Ops
+:ldops_site_base_url: https://liquidoc-ops.docops.org
+:theme_docs_www: https://asciidocsy.netlify.app
+:imagesdir: _docs/assets/images
+:toc: macro
+
+This repository contains the prime/canonical documentation source as well as a *"`quickstrapping`" application* for the LiquiDoc Ops _technical-documentation management framework_.
+
+Combining open-source tools with collaborative workflows, LiquiDoc Ops facilitates writing, editing, coordinating, and deploying tech docs in fully extensible, Git-managed codebases for true integration between your products and their _developer and end-user documentation_.
+
+image::doc-opstopus.png[width=200,float=right]
+LiquiDoc Ops (*LDOps*) incorporates two excellent lightweight markup languages (link:http://asciidoctor.org/docs/what-is-asciidoc/[AsciiDoc] for content and link:https://github.com/darvid/trine/wiki/YAML-Primer[YAML] for data) with premiere, open-source build and publish utilities (link:http://asciidoctor.org/[Asciidoctor], and link:http://idratherbewriting.com/2015/02/27/static-site-generators-start-to-displace-online-cmss/[Jekyll]).
+All this is stitched together seamlessly with link:https://shopify.github.io/liquid/[Liquid] templating markup and coordinated by a docs build utility called link:https://github.com/DocOps/liquidoc-gem[*LiquiDoc*].
+This creates a truly open, highly portable and scalable system for developing _docs-as-code_ the way (and where) programmers develop _product code_.
+
+toc::[]
+
+The remainder of this document assumes you wish to implement an instance of the LDOps _framework_ for a project of your own.
+This quickstart guide instructs the bootstrapping of an appropriate LDOps environment.
+
+== Quickstrap a LiquiDoc Ops Instance
+
+The following procedure is what some call a *bootstrapping operation* to get an _actual LDOps-based instance_ up and running.
+It inflates directories and sets up some initial demonstration files based on preferences you first customize.
+
+[WARNING]
+.METAmorphosis Warning
+The file you are reading (`README.adoc`) is the README for the _LiquiDoc Ops_ docs/quickstrap repository.
+The procedure it instructs will convert its current generic bootstrap context into your own LDOps project application _right in place_.
++
+*This file will be copied* to `_docs/README.adoc` during the procedure, and it will be replaced by your instance's own new README stub.
+For a LiquiDoc Ops instance, the `_docs/` directory is for documentation about the LiquiDoc Ops instance.
+Paths like `subjects/` and `content/` are used for sourcing matter about your products.
+
+[TIP]
+After this procedure, you may retrofit `_docs/README.adoc` to document your own LDOps instance.
+This procedure will eventually support syncing of content between the prime canonical LDOps documentation and your customized instance docs in `_docs/`.
+
+// tag::bootstrap-steps[]
+=== Establish the Environment
+
+These steps create the basis for your first LiquiDoc Ops-driven documentation build.
+
+. *Navigate to the parent directory* of your new docs directory.
++
+.Example for new project
+[source,shell]
+----
+cd Documents/workspace
+----
++
+.Example for docs inside a product project
+[source,shell]
+----
+cd Documents/workspace/my-product
+----
+
+. *Clone the LiquiDoc Ops quickstrap repo.*
++
+[subs="quotes"]
+.Example
+[source,shell]
+----
+git clone git@github.com:DocOps/liquidoc-ops.git *docs_dir*
+----
++
+Replace `docs_dir` with the directory name you want to give this directory -- either a subdirectory of a parent project or the root directory of a new, independent repo.
+
+. *Change to the project directory.*
++
+.Example
+[source,shell]
+----
+cd docs_dir
+----
+
+. *Re-associate your files* with the proper repository.
+[upperalpha]
+.. _If your docs project is its own Git repo_, change the boilerplate project's remote origin Git repository to your own.
++
+.Example
+[source,shell]
+----
+git remote set-url origin git://github.com:your-project/your-repo-name.git
+----
++
+Replace this URI with your own.
+
+.. _If your docs project is part of a parent directory's Git repo_, remove _local_ Git files (for the LDOps repo you just cloned) so your new docs source will be absorbed into the parent repo.
++
+.Example
+[source,shell]
+----
+rm -rf .git
+----
++
+Now your new directory/files will appear as uncommitted additions to the parent project (`git status`).
+
+. *Run Bundler* to install dependencies.
++
+[source,shell]
+----
+bundle install
+----
++
+If an error indicates Bundler is not installed, run `gem install bundler`, then repeat this command.
++
+[TIP]
+This process generates a `Gemfile.lock` file, which you will want to track in Git.
+Whenever your Liquidoc or your application require different versions of such upstream gems, maintain `Gemfile.lock` in source control as a means of ensuring all users develop with the settings that will be passed on to production.
+
+. *Rename this README* so the upcoming _init_ operation does not overwrite it.
++
+.Example
+[source,shell]
+----
+mv README.adoc README.meta.adoc
+----
++
+[NOTE]
+This file may confuse future users; we advise removing it before sharing your LDOps project.
+
+. *Edit the setup data file* for your new LDOps project.
++
+In your favorite text/code editor, open `_init/setup.yml` and fill out the required info, then *save the file*.
+
+. *Initialize your custom environment.*
+
+.. Generate an _initialization config_ based on the custom preferences in `_init/setup.yml`.
++
+[source,shell]
+----
+bundle exec liquidoc --template _init/templates/init.yaml --data _init/setup.yml --output _init/init.yml
+----
++
+This command performs a one-off template parsing to establish the temporary _init_ build script, responding with a message that your `_init/init.yml` was built.
+
+.. Generate _infrastructure files_ using your temporary init config.
++
+[source,shell]
+----
+bundle exec liquidoc -c _init/init.yml -d _init/setup.yml
+----
+
+[NOTE]
+This procedure builds starter files (and inflates directories), even replacing this `README.adoc` file.
+If your initialization steps proceeded without errors, you now have a codebase that serves as the skeleton for an LDOps implementation, starting with a `_configs/` directory containing LiquiDoc, Asciidoctor, and Jekyll configuration files, as well as new `README.adoc` and `content/index.adoc` files.
+You can make changes to `data/meta.yml` and re-run the liquidoc commands until you approve of the results.
+
+=== Build the Docs
+
+This repository will have been transformed.
+
+. You can now *review the new `README.adoc`* file generated by this procedure. +
+The new README file is oriented toward _your LDOps application's_ future users -- starting with you.
+
+. *Perform the first build of your seedling docset*, as instructed in the new README. +
+Check the target directory for built artifacts and review them for errors.
+
+[TIP]
+You should edit and maintain the generated README as the canonical reference for getting started with your docs codebase.
+As you introduce complexity, the README should help _simplify_ the getting-started process.
+Independent documentation of your LDOps application can be derived from link:https://www.ajyl.org/liquidoc-ops-guides/admin/meta_adapt-these-docs[forking the LDOps Guides repository].
+
+=== Wrapup
+
+. When you are certain everything looks good, *delete the `_init/` directory*.
+
+. Move or remove `README.meta.adoc` (likely this file!). +
+Everything important from this file is available in the link:{LDOps_site_base_url}/liquidoc-ops-guides/admin[LDOps Guides].
+// end::bootstrap-steps[]
+
+[TIP]
+If you are not happy with the output, you may further edit `meta.yml` and continue running the `bundle exec liquidoc -c _init/init.yml` command to overwrite the generated files.
+
+== Structure
+
+Here is the basic directory structure of a very simple LiquiDoc Ops project _after the initialization and the first build procedure has been carried out_.
+
+// tag::architecture-diagram[]
+[source]
+----
+├── _build/
+├── _configs/
+│   ├── asciidoctor.yml
+│   ├── liquidoc-ops.yml
+│   ├── jekyll-global.yml
+│   └── netlify.toml
+├── _ops/
+│   ├── build-docs.yaml
+│   └── init-topic.yaml
+├── _templates/
+│   ├── asciidoctor/
+│   └── liquid/
+├── content
+│   ├── assets/
+│   ├── common/
+│   ├── pages/
+│   ├── snippets/
+│   ├── <product-slug>/
+│   |   ├── _manifest.yml
+│   |   ├── images/
+│   |   ├── snippets/
+│   |   └── <topic-slug>.adoc
+│   └── <role-slug>/
+│       ├── _manifest.yml
+│       ├── images/
+│       └── <topic-slug>.adoc
+├── data/
+│   ├── manifest-global.yml
+│   ├── meta.yml
+│   └── subjects.yml
+├── lib/
+│   ├── asciidoctor/
+│   ├── jekyll/
+│   └── liquid/
+├── theme/
+│   ├── _includes/
+│   ├── _layouts/
+│   ├── css/
+│   ├── fonts/
+│   ├── js/
+│   ├── _pdf/
+│   │   └── styles.yml
+|   └── vendors/
+├── Gemfile
+├── Gemfile.lock
+└── README.adoc
+----
+// end::architecture-diagram[]
+
+[NOTE]
+This is not a representation of _this_ repository's state but rather a model of a complete LiquiDoc Ops architecture.
+
+// tag::architecture-definitions[]
+_build/::
+This is where all processed files end up, including all migrated assets, prebuilt source, or final artifacts.
+This directory is _not_ tracked in source control, so you will not see it until you run a build routine, and you cannot commit changes made to it.
+It is always safe to delete this directory in your local workspace.
+See <<build-dir>> for more info.
+
+_configs/::
+Files that inform application settings go here.
+If a file is more about informing the build process than it is about populating the docs with content, it probably goes here.
+The `asciidoctor.yml` file is for non-content AsciiDoc attributes that pertain to the structure or process of rendering with Asciidoctor.
+Usually at least one Jekyll config file goes here.
+Optional LiquiDoc and Clide configuration files go here.
+
+_ops/::
+For scripts, utilities, and routines that support the _use_ of LDOps.
+For instance, the `init-topic.yml` config coordinates the automated creation of topic files and manifest entries.
+The core *build routine definition* file (`build-docs.yaml` by convention) also lives here.
+
+_templates/::
+For data transformation and full control over output.
+
+_templates/asciidoctor/:::
+HAML-, ERB-, or Slim-driven link:https://github.com/asciidoctor/asciidoctor-backends[Asciidoctor backend templates] for manipulating AsciiDoc rendering output.
+
+_templates/liquid/:::
+Here we store most of our Liquid-driven <<build-strategies,prebuilding>> templates.
+These are _not_ Jekyll theming templates, which also use Liquid.
+These are the ones we use for generating new YAML and AsciiDoc source files from other source files and external data.
++
+[NOTE]
+See the <<suggested-conventions-liquidoc>>.
+
+content/::
+The first of our publishable directories, `content/` is the base path for documentarians' main work area.
+Everything inside the `content/` directory will be copied into the `_build/` directory early in the build process.
+
+content/pages/:::
+For AsciiDoc, Markdown, or HTML files of the _page_ content type.
+This is usually global site matter outside the subject documentation.
+
+content/snippets/:::
+For content _snippets_.
+
+content/<subject-slug>/:::
+For AsciiDoc files of textual content (topics, articles, chapters, etc.).
+Here, `<subject-slug>` might be a _product_ or _role_, for instance.
+They can be arbitrarily named.
++
+[NOTE]
+For *1-subject applications* of LiquiDoc Ops, this directory is conventionally called `topics/`.
+
+content/<subject-slug>/_manifest.yml::::
+This crucial file provides a docket of all page-forming content items (topics) relating to the given subject.
+It determines how they are organized in the site navigation (using metadata such as categories into which content items fall).
+The manifest file carries essential build info that lets us see relationships between topics and build content-exclusive portals from otherwise-decontextualized repositories.
+
+content/<subject-slug>/images/::::
+Subject-specific images go here.
+
+content/<subject-slug>/snippets/::::
+Subject-specific snippets go here.
+
+data/::
+All YAML, CSV, JSON, or other small-data files that contain content-relevant information go here.
+These data files differ from those that belong in `_configs/` (or `_ops/`) in important ways, essentially revolving around whether the data needs to be available for display.
+If it is _not_ establishing settings or used to inform procedures (like in `_ops/`), the data file probably belongs in `data/`.
+Let's look at some key data files standard to LDOps.
+
+data/meta.yml:::
+For general information about your company, URL and path info.
+This file usually contains only simple data -- scalars and numerals, just a big (or small) column of basic key-value pairs to create simple variables.
+
+data/subjects.yml:::
+For subdivided information about just what these docs cover, in distinct object blocks.
+Each top-level block can be called for selective ingest during build routines using the colon signifier, such as by calling `data/subjects.yml:products` or `data/subjects.yml:roles`.
+Any versioning information for each product is tracked here, as well.
++
+[NOTE]
+Some instances with only products for subjects call this file `products.yml`.
+
+data/manifest-global.yml:::
+The platform-wide manifest file defines all the volumes and other artifact-organizing data for this project.
+This file maps document titles and other metadata the files that make up each docset.
+In addition to the major docsets, this file defines global metadata (e.g., categories, groups, global navigation elements, etc.).
+
+data/subect-attributes.yml:::
+This _optional_ file contains a catalog of AsciiDoc attributes (content variables)
+
+lib/::
+Libraries of functional link:https://asciidoctor.org/docs/user-manual/#extensions[Asciidoctor extensions] or link:https://jekyllrb.com/docs/plugins/[Jekyll plugins].
+Some of these extensions will be copied into `_build/` to serve in context.
+Ideally these are sourced as cloud-hosted forks of their original repositories, or else they are local one-offs/modifications we can store directly here.
+
+theme/::
+Files that structure your output displays go here.
+This mainly includes data files, styles, and Jekyll templates for modifying AsciiDocsy.
+Supplemental or replacement files for templates (`theme/_includes/` and `theme/_layouts/`) and asset files such as stylesheets, front-end javascripts, fonts, and of course theme-related images can all be added to the appropriate subdirectories.
+This would also be the home of PDF and slideshow output theme configurations, as applicable.
+
+theme/_pdf/styles.yml:::
+A very basic PDF theming file based on Asciidoctor's link:https://github.com/asciidoctor/asciidoctor-pdf/blob/master/data/themes/default-theme.yml[*default-theme.yml*], just to get you started.
+
+README.adoc::
+More than just your project's initial point of contributor-oriented self-documentation, a LiquiDoc Ops `README.adoc` file contains canonical instance data.
+All AsciiDoc attributes set in the README.adoc file can be ingested at the top of your build routines and other LiquiDoc operations.
+This is a method of true single sourcing that you can be used for product repos as well.
++
+[NOTE]
+The LiquiDoc Ops init operation creates this file with many default settings.
+
+Gemfile & Gemfile.lock::
+These files (both Git-tracked) define the project's Ruby dependencies to ensure they are proper and up-to-date at runtime.
+`Gemfile` defines the dependency requirement ranges.
+`Gemfile.lock` reports which versions of which dependency gems are to be installed and used in a given instance of a Bundler-backed runtime execution of Ruby code (via `bundle exec <command>`).
+
+== The Build Operation
+
+The `_ops/build-docs.yml` file defines the [.buz]*build routine* for a LiquiDoc Ops instance.
+It is the brains of any LDOps application, instructing LiquiDoc to perform a series of [.buz]*actions* to generate consistent output.
+The build routine conducts the sequential compilation routine and ensures all assets are in place for the final artifact rendering operations.
+It also instigates these operations and then performs post-build actions to clean up and ensure all assets and artifacts are in place.
+
+At a minimum, the file consists of a YAML array that is run sequentially.
+It can also include Liquid templating and scripting, for performing tasks that vary based on data inputs (such as environment-specific builds) or tasks that repeat based on ingested data (such as loops that cause actions to recur) to reduce duplication and file length.
+
+=== Execution
+
+A build routine is executed on the commandline using LiquiDoc.
+The typical command passes an environment and other variables, including some from data files.
+
+For example, take this command: `bundle exec liquidoc -c _ops/build-docs.yaml -d data/products.yml,data/manifest.yml -v env=demo -v subjs=client,server`.
+The command passes two data files and two arguments to the build routine.
+The two variables (`end` and `subjs`) are usually optional, as sensible defaults can be set inside `build-docs.yaml`.
+
+=== The Build Directory (`_build/`)
+// tag::_build-dir-diagram[]
+[source]
+----
+_build/
+    ├── _pre/
+    │   ├── attributes_#.yml
+    │   ├── build-docs_parsed.yml
+    |   └── jekyll-opts-args_#.yml
+    ├── .jekyll-cache
+    ├── _data/
+    │   ├── config/
+    │   ├── theme/
+    │   ├── built/
+    |   |   ├── attributes/
+    |   |   └── excludes/
+    │   ├── manifest.yml
+    │   ├── meta.yml
+    |   └── subjects.yml
+    ├── <subject-dirs>
+    ├── _includes/
+    ├── _layouts/
+    ├── _pdf/
+    └── assets/
+        ├── css/
+        ├── fonts/
+        ├── images/
+        └── js/
+----
+// tag::_build-dir-diagram[]
+
+After the prebuild, Jekyll and Asciidoctor can perform procedures by treating the `_build/` directory as their source.
+Neither tool needs to know about what came before.
+As a result, `_build/` can be treated as a scratch directory, where you can write any files to be used in final rendering operations.
+
+_build/pre/::
+Where system-parsed files are built and ephemerally stored.
+
+_build/pre/attributes_#.yml:::
+Collected AsciiDoc attributes for loading to Jekyll/Asciidoctor, one file per portal build.
+
+_build/pre/build-docs.yml:::
+A copy of the build routine configuration file (`_ops/build-docs.yml`) after Liquid parsing.
+
+_build/pre/jekyll_opts_args_#.yml:::
+Accrued Jekyll configuration settings.
+
+All other paths displayed above are either direct copies from the source (such as the contents of `assets/`) or else were generated during the prebuild (such as the files under `_data/built/`).
+
+== Toolchain Guide
+
+For many people, the most difficult technical aspect of learning to treat docs like code is understanding which parts of the environment/toolchain perform what actions.
+This leads to extraordinary frustration when troubleshooting, as practitioners don't even know where to look for help.
+
+This challenge is at least as present with LiquiDoc Ops as with any other toolchain I have seen, so we take extra care to delimit the various tools to help with configuration and debugging.
+
+.The LiquiDoc Ops "`ecosystem`"
+image::diagram-docops-ecosystem.png[]
+
+=== Asciidoctor, Jekyll, LiquiD(oc) (Ops) and Clide?
+
+See what we mean?
+
+*Ruby* is both a *programming language* and a *Runtime environment*.
+If you have Ruby runtime, you can execute Ruby applications on any operating system.
+Other than Git, the core elements of LiquiDoc Ops are all Ruby applications.
+Asciidoctor, Jekyll, jekyll-asciidoc, Liquid, LiquiDoc, and Clide are all Ruby *gems* (cross-compatible, packaged [.term.api]*APIs*) maintained as core dependencies of any LiquiDoc Ops application (that's what `Gemfile` and Bundler are for).
+
+*You do not need to learn Ruby* programming to implement LiquiDoc Ops.
+That's kind of the whole point of LiquiDoc Ops.
+The project is intended to abstract the functionality Ruby is performing into useful applications and routines you can configure using simpler APIs and CLIs.
+That is what the rest of the toolchain is for, and a bit about how it was curated.
+
+*Asciidoctor* is a *set of conversion utilities* that greatly enhance the use of the AsciiDoc content source format.
+The core utility is the asciidoctor Ruby gem, which converts AsciiDoc-formatted files to HTML, PDF, and numerous other output forms.
+
+*Asciidoctor, the organization*, is leading a specification effort for AsciiDoc by way of the Eclipse Foundation.
+We generally trust their tools and their advice.
+
+*Jekyll is a static-site generator*.
+In fact, it is the most popular static-site generator, brought about by GitHub as their core HTML-delivery platform suitable for end users.
+
+Jekyll and Asciidoctor come together in the *jekyll-asciidoc* plugin, which gives Jekyll its amazing Asciidoctor conversion powers.
+Developed and actively maintained by Asciidoctor community, this plugin has thought of just about everything.
+
+*Liquid* is a *templating markup format* used by *Jekyll*.
+Typically mixed with HTML to create "`dynamic`", data-driven web pages for Shopify (developer/maintainer) and numerous other platforms, Liquid is highly adaptable and extensible.
+We like Liquid for several key reasons, including:
+
+* Due to excellent "`whitespace control,`" Liquid is great at formatting not just HTML but also AsciiDoc and YAML or any other plaintext source where spacing matters.
+* Liquid is highly extensible using Ruby, and we've extended it plenty, as has Jekyll.
+* Liquid is intended for non-developers -- it is both safe and relatively simple.
+
+This can be frustrating to experienced coders who expect a richer development environment, but we have found it superior to other formats for both our implementation needs and our user base.
+
+*AsciiDocsy is a Jekyll theme* intended for AsciiDoc-sourced documentation sites.
+Maintained by DocOps Lab, AsciiDocsy ships with Algolia cloud-search integration and lots of AsciiDoc/documentation-related features ready to go.
+AsciiDocsy extensively uses Liquid templates to form layout and feature elements of the theme.
+
+*LiquiDoc* is a *build tool for Asciidoctor/Jekyll*-driven websites.
+Maintained by DocOps Lab, LiquiDoc adds the power of Liquid to AsciiDoc.
+
+[NOTE]
+Since Jekyll includes a Liquid converter, the reason for LiquiDoc is to orchestrate more complicated builds outside the scope of any static-site generator, including PDF editions.
+The AsciiDocsy theme documentation site is a good example of a rich asciidoc-jekyll sites that does not use LiquiDoc.
+
+*LiquiDoc Ops* is a *content management framework* for sourcing and generating complex technical documentation sites and other artifacts with LiquiDoc.
+It is our recommended set of dependencies and conventions for taking advantage of an optimized publishing toolchain.
+
+*Clide* is your _commandline-integrated documentation environment_ -- the final ingredient to the core LiquiDoc Ops toolchain.
+Clide empowers the end user (administrator and author alike) on the DocOps journey.
+It performs complex operations "`under the hood`" based on configured foreknowledge of your LiquiDoc Ops application.
+
+When preconfigured for LiquiDoc Ops, Clide is a commandline utility that either *scripts or instructs* all necessary tasks for working in a LiquiDoc Ops environment.
+
+Because of Clide, most end users need never use `asciidoctor`, `jekyll`, or `liquidoc` commands again.
+Nor will they need to prepend `bundle exec` -- just `clide`.
+They will no longer need to come up with or even look up the right tools, subcommands, and arguments for every operation.
+May the next generation of docs-as-coders never know the pain.
+
+Clide nevertheless can expose the underlying commands it is abstracting, so users _can_ better understand the underlying toolchain or even re-script it in other environments.
+Clide also provides error reports that note which underlying gems are complaining and offers troubleshooting help.
+
+=== Graceful Degradation/Migration
+
+If it sounds like there's a lot going on with the various tools maintained by DocOps Lab (AsciiDocsy, LiquiDoc, LiquiDoc Ops, and Clide), that's because there is a lot going on there.
+Without a large community backing these tools, there is little reason to expect they will be actively maintained in perpetuity.
+
+This is a fair concern, and one that was taken into account from the beginning.
+
+Everything in the LiquiDoc Ops toolchain is guided by open standards and extensibility, and each tool is permissively free and open-source (FOSS).
+It is all intended to not leave you stranded if any part of the toolchain becomes stagnant, including the cloud components.
+
+Anything herein performed by *Clide* and *LiquiDoc*, and thus using *Liquid*, can be recreated in another scripting language or build platform, such as Bash, Rake, Make, Gradle, Gulp, Grunt, or who knows how many altneratives.
+These core tools just have a head start in this framework -- a parallel framework could be equally or more successful using corresponding dependencies for a Node/JS or Java-based toolchain.
+
+==== Back-end Reliability
+
+LiquiDoc Ops is designed such that the end result of any _prebuild_ LiquiDoc operation is a ready-to-go Jekyll/Asciidoctor application.
+We go to some pains not to not extend the core functionality of these two applications (or Liquid) after the prebuild.
+
+That is, right before any _render_ operations are performed (to make PDF or HTML), the prebuild has constructed the fully configured and structured source.
+This source is ready for further build operations that do _not_ depend in any significant way on LiquiDoc, Clide, or any other tool but Asciidoctor, Jekyll, and their dependencies.
+
+That means as long as LiquiDoc is building your docsets properly when you decide to stop using it, you can use the ephemeral `_build/` directory as the source for your whole application.
+
+At this point, you would be maintaining an Asciidoctor/Jekyll application the way hundreds of teams already do today with great success, just without the help of a prebuild system or community-driven framework.
+You'd have lots more AsciiDoc and YAML to maintain, but far less of it would be complex or dynamic.
+Less complexity means more rote maintenance work and potential for inaccuracy, but it's commonly performed by teams with the hours to put in.
+
+The closest alternative to LiquiDoc Ops is link:https://antora.org[[Antora].
+The end result of your LiquiDoc Ops prebuild should form a decent basis for an Antora SSG application, should you choose to migrate and stick with AsciiDoc.
+
+==== Front-end Reliability
+
+After the full build routine completes, Jekyll and AsciiDocsy have provided a static website ready for deployment, search indexing, and everything else that happens on the Web.
+AsciiDocsy uses popular technologies to deliver its front-end features.
+Twitter's *Bootstrap front-end framework* elegantly employs Google's *jQuery JavaScript library*.
+The *CSS* is sourced as *Sass (SCSS)* and compiled at build time.
+
+AsciiDocsy's front-end extension guide should have you on your way, and AsciiDocsy is yours to use, modify, or migrate from as you see fit, royalty free forever.
+
+== LDOps Principles & Strategies
+
+LiquiDoc Ops is an application-development framework.
+The _application_ in question is a custom documentation environment and content/small-data library.
+
+Jekyll is a Ruby application, but _your documentation website source is a Jekyll application_, and your overall documentation platform/environment is a LiquiDoc Ops application.
+The terms do not matter much, but stay aware that every contributor to an _instance_ of LiquiDoc Ops is in fact cooperatively building a cohesive docs-authoring and -delivery _application_.
+
+The following statements establish a unified development mindset of sorts along with strategic guidelines for implementing the approach.
+
+=== LDOps Matter Storage Conventions.
+
+In LiquiDoc Ops, canonical data is paramount, and single-sourcing can be taken as seriously as you can handle.
+All product documentation can be as [.term]*DRY* as well-maintained API docs, sourcing canonical attributes in the product source code itself.
+And with AsciiDoc-formatted READMEs we can go even farther.
+
+// tag::small-data-flat-files[]
+==== Store small data in flat files.
+
+When we talk about _product attributes_ (or _product metadata_), we are referring to information _about_ a software product -- its defining characteristics -- not any kind of data stored/collected/processed _by_ that product.
+Consider what data matters about products: capacities, dependencies, options, default settings, integrations, and anything classifiable as metadata, including information about the product developer, revision history, etc.
+
+Then consider how these things change as products evolve -- every version has its own array of the above attributes, and the list can only be expected to grow and morph.
+
+Data of this kind -- [.term]*small data* -- [.tip]*is not best stored in relational databases*; version control is essential, and schemas get in the way, especially since documentation artifacts are served from static servers.
+The human-friendliest formats are probably *YAML* and *CSV*.
+YAML can be edited in any decent code editor, and a comma-separated values file can be edited in any spreadsheet application.
+// end::small-data-flat-files[]
+
+// tag::single-source-data-readme[]
+==== Single-source key product data in `README.adoc`.
+
+Canonical information about the product that appears in the README but is duplicated elsewhere can be sourced as AsciiDoc attributes right in your `README.adoc` file and then extracted using a LiquiDoc parse action.
+This way you never have to duplicate sources for key product information that must appear in the README but also in the product and the main docs.
+
+While `.adoc` files cannot handle Enumerables (Structures/Arrays) or any kind of nested data, the AsciiDoc attribute definition syntax is a good way to cumulatively establish scalar key-value pairs (Strings, Numbers, and Booleans).
+We don't want to draw from YAML or other sources to populate a README, which is supposed to be pretty raw, but we desperately do not wish for README files to grow out of sync.
+
+For these reasons, it is best to keep README files minimal if you cannot use them strategically as a source of canonical product data.
+
+Nevertheless, all product attributes not necessary for the README should be stored in YAML-formatted files.
+// end::single-source-data-readme[]
+
+=== LDOps Information Architecture
+
+LiquiDoc Ops employs several architectural conventions with semantic or programmatic value.
+If you cannot map your subject matter to these formats, taxonomy, and so forth, you are welcome to invent your own.
+
+==== Categorize by Subject
+
+Whether you are documenting a suite of products, a complex project, or a fictional universe, some kind of demarcation subdivides the focal points of your documentation.
+We call this the _subjects_ -- what subjects exactly do your docs cover?
+
+[TIP]
+If you only have one subject with one audience role, you may have overshot on your choice of framework.
+
+Subjects could be interfaces or components of a very large and complex product, or they could be unrelated products across an enterprise.
+You know how your subjects break down; LDOps will meet you there.
+
+==== Subdivide Subjects by Role (Optional)
+
+If your subjects are products, each product probably has one or more audiences for documentation.
+Divide your audience into roles so you can deliver appropriate content.
+
+If roles are in fact the main demarcation of your subject (such as administrators, developers, and end-users of a single  product), then by all means your primary divider can be user roles.
+
+==== Designate and Assign Topic Types
+
+It probably does not matter too much _how_ you divide your topics into types, but most technical writers find it helpful to organize topics into categories with _semantic distinction_.
+
+LiquiDoc Ops suggests a framework based on subdividing three broad _formats_ into subcategories based on _intent_.
+
+[source,yaml]
+----
+include::data/styles/topics.yml[tags=topic-types]
+----
+
+Notice each 1-syllable type (_**t**ask_, _**r**eference_, and _**c**oncept_) matches a link:https://www.informit.com/articles/article.aspx?p=1745125&seqNum=3[DITA topic type].
+
+Or use the similarly simplified link:https://diataxis.fr/[Diátaxis] framework options:
+
+* `t`: tutorial
+* `h`: how-to
+* `r`: reference
+* `x`: explanation
+
+Types are used to designate *categorization* for indexes that indicate or organize by topic type.
+They may also inform which *layout* applied to topics of different types.
+
+[NOTE]
+An additional type, _index_, can be designated with an `i` character.
+These are for landing or index pages that mostly link to a set of topics.
+
+[[build-strategies]]
+=== LDOps Build Strategies
+
+The strength of LiquiDoc Ops is its ability to maintain strictly "`DRY`" single sourcing while still producing diverse output.
+These strategic principles are key to maintaining this capability.
+
+// tag::prebuild-reference-content[]
+==== Prebuild and transclude complex reference content.
+
+All that small data needs to make it into your docs in a more human-readable format.
+This is where prebuilding reference content to AsciiDoc source comes in.
+Use Liquid templates to generate includable AsciiDoc files into the `_build/snippets/` directory.
+Then `include::[]` them into your static AsciiDoc files.
+// end::prebuild-reference-content[]
+
+// tag::prebuild-variables-strings[]
+==== Prebuild and ingest variables for templates.
+
+Start with the simplest forms of data possible, and generate multiple transformed parameters to serve as Liquid variables and AsciiDoc attributes.
+Be concise with your source but creative with the permutations of keys and values you can create using Liquid to transform your data and strings at the top of the build routine.
+// end::prebuild-variables-strings[]
+
+=== LDOps Divergence-handling Strategies
+
+// tag::subject-based-docsets[]
+Handle major parallel divergence by splitting output into subject-based "`docsets`".
+
+When there are major points of divergence in output requirements -- such as significantly different "`editions” of the same product or highly variant audiences, like basic vs advanced users or consumers vs developers -- each splinter necessitates its own _guide_ or _volume_.
+In these cases, you want to direct users to the appropriate docset, as well as make it easy for those who land in the wrong guide to switch to a similar place in the parallel guide.
+Guides are built sequentially, each drawing configuration settings and content designated for it, along with content and data common to other guides.
+This process generates parallel guides, including Web portals that are built side by side and served as components of one site.
+// end::subject-based-docsets[]
+
+// tag::portals-manuals[]
+==== Handle output-format diversity with "`portals,`" "`manuals,`" etc.
+
+A lot of the conflict in documentation output stems from the _manuals-vs-portals_ debate.
+Modern websites tend to work best by presenting content in semi-serialized or unserialized article format, more like Wikipedia than a book.
+Meanwhile, technical documentation is often still intended to be consumed more like a book or a traditional manual -- even if you don't read it in order, you _see_ it in the order the publisher chose.
+
+LDOps balances both without requiring either.
+Each final rendering action is technically building either a book-style _manual_ or a help-site/wiki-style _portal_.
+
+[NOTE]
+.Coming Soon
+JavaScript-driven slide presentations, or "`decks`"!
+
+// end::portals-manuals[]
+
+// tag::revisions-branches-tags[]
+==== Store sequential revisions in Git branches.
+
+If the product your LDOps application covers is released in consecutive versions, with more than one supported at any given time, chances are the product developers maintain multiple branched and tagged versions of the product.
+They further branch from these branches when modifying a particular version of the code, either post-release as a patch or pre-release.
+LDOps docs can be organized the same way.
+
+[NOTE]
+Clide automates the Git operations involved in archiving doc versions.
+
+This _branch_-based approach is contrary to the more-common method of storing revisions in parallel _directories_.
+The _folder_-based option is viable, but it creates numerous copies of often nearly-identical content in the source repo.
+While very un-DRY, this method is also far less complicated and may suit your needs.
+// end::revisions-branches-tags[]
+
+=== LDOps Divergence Tactics
+
+These are the numerous specific ways we have devised to technically handle versioning in product documentation sourcing and output.
+
+// tag::divergence-tactic-tabs-togs-mods[]
+==== Organize minor content divergence with tabs, toggles, swaps, and amenders
+
+These four "`front-end`" techniques are supported by AsciiDocsy.
+Most of them empower your users to select their preferred subject matter with simple JavaScript.
+They also enable you to activate alternate default selections for a more guided experience.
+
+See {asciidocsy}
+// end::divergence-tactic-tabs-togs-mods[]
+
+// end::semantic-flags-alternate-artifacts[]
+==== Demarcate minor version differences in PDFs with semantic flags or alternate artifacts.
+
+You'll probably want to release new PDFs with each sequential product revision (and maybe more often, if you patch docs between releases).
+But consider other kinds of divergence which may require distinct PDF artifacts.
+
+Much relatively minor product divergence can be handled with notices in the text.
+LiquiDoc Ops offers semantic inline elements for "`flagging`" such material when published in the same PDFs.
+
+Alternately, hide irrelevant content from an audience by publishing different editions of the documentation.
+LiquiDoc Ops instructs and handles syntax for choosing only content with certain flags at buildtime.
+// end::semantic-flags-alternate-artifacts[]
+
+=== Liquid Templating Conventions
+
+The following conventions apply to templates used for LiquiDoc and Jekyll.
+
+// tag::filenames[]
+==== Use sensible filenames and extensions.
+
+The suggested convention for LiquiDoc template filenames is to name them with `.liquid` either _in_ or _as_ the extension, or to name them with the spelled-out variant of the target language.
+For instance, Liquid templates that render to AsciiDoc are named like `<template-purpose>.asciidoc`, even though the files they generate are named `resulting-file.adoc`.
+Likewise, Liquid templates intended to produce `.yml` files are named like so: `<template-name>.yaml`.
+
+Meanwhile, an HTML partial would be named `<partial-name>.html`.
+In LiquiDoc Ops, there is never a reason not to allow Liquid parsing of HTML files.
+
+Functional templates that process data objects (as Liquid _includes_) rather than rendering output are named `<function>.liq` or `<function>.liquid`.
+// end::filenames[]
+
+=== AsciiDoc Filename and Slug Formats
+
+// tag::slug-formats[]
+==== Format topic slugs sensibly.
+
+All filenames are based on slugs, limited to (alphanumeric characters, hyphens, and underscores).
+For example, `topic-name.adoc` or even just `intro.adoc`.
+
+Aside from <<semantic-filenames,semantic filenames>>,
+// tag::slug-formats[]
+
+// tag::slug-topic-metadata[]
+[[semantic-filenames]]
+==== Bake metadata into topic slugs (semantic filenames).
+
+More-complex filenames can carry information about the topic.
+In our case, key facets of any topic are:
+
+* the actual _topic_ of the topic
+* the _type_ of topic (task, reference, etc)
+* the broad grouping or _domain_ the topic fits in
+* any _version_ of the subject to which the topic applies exclusively
+
+LiquiDoc Ops can parse filenames adhering to the following template:
+
+ `[t[t]_][domain_[t[t]_]]topic-text[_t[t]][_mod[_t[t]]`
+
+Put more clearly, here are some variants.
+
+ slug-text
+ slug-text_t
+ slug-text_tt
+ slug-text_mod
+ slug-text_tt_mod
+ t_slug-text
+ tt_slug-text_mod
+ domain_slug-text
+ domain_slug-text_tt_mod
+ domain_tt_slug-text_mod
+
+Where `slug-text` is the only required segment, and:
+
+* `domain` is a broad subcategory of your product docset
+* `slug-text` is briefly & broadly descriptive of the title
+* `mod` is a subject slug denoting a subject-specific version of a topic
+* `tt` (topic type) is a 1-or-2-character representation of:
+
+Topic slugs with mods tacked onto the end designate that they apply to one guide or another and are not to be included in the rest.
+
+The following are valid example slugs, where `install` and `sdk` are _domains_; `backend-basic`, `best-practices`, `environment-create`, and `environment-configure` are _texts_; `nix` and `win` are mods representing Linux/Unix and Windows, respectively; and 1- or 2-character segments are all topic type codes.
+
+* `backend-install-basic_t`
+* `t_backend-install-basic`
+* `install_backend-basic_t`
+* `install_backend-basic`
+* `install_backend-basic_nix`
+* `install_backend-basic_th_nix`
+* `install_backend-basic_th_win`
+* `specifications_rs_pro`
+* `sdk_intro`
+* `sdk_best-practices`
+* `sdk_environment-create`
+* `sdk_environment-configure`
+* `sdk_intro_co`
+* `sdk_best-practices_rg`
+* `sdk_environment-create_th`
+* `sdk_environment-create_tl`
+* `sdk_environment-configure_ra`
+
+*One would never mix all of these formations together*, but make a local convention of whether to use any of these features and where the topic-type code gets used, if you choose to implement it.
+
+Files named from these slugs (backend-install-basic_t.adoc`, etc) would go in the same directory, but their eventual URL paths would be dictated by the domains and the topic's permalink structure.
+For instance, files designated for the `install`, or `sdk` domains will wind up in `<site-path>/<prod>/sdk/best-practices` or `<site-path>/<prod>/install/backend-basic`, etc.
+
+They can even be further broken down if you wish.
+
+.Example remappings from semantic filenames
+[horizontal]
+`sdk_environment-create_th.adoc`:: `sdk/environment-create/how-to`
+`sdk_environment-create_tl.adoc`:: `sdk/environment-create/tutorial`
+
+// tag::slug-formats[]
+
+// tag::noun-verb-order[]
+==== Use _noun-verb_ order.
+
+A topic about installing a client should probably be slugged as something like `client-install`, rather than `install-client`.
+This is mainly as they will be grouped by the first word, which should probably be the subject in cases where more than one subject will have an action like `install` or `create`, etc.
+// end::noun-verb-order[]
+
+=== Other Best Practices
+
+// tag::rule-no-built-files[]
+[[rule-no-built-files]]
+==== Track no built files in source control.
+
+If a file is the product of other source files, generate that file at build time, and do not commit it to source control.
+This means keeping an ignored build directory (conventionally `_build/`), and everything outside that path should be unique.
+
+[NOTE]
+Exceptions to this rule include _init_ and _ops_ routines, configured to instruct LiquiDoc to generate useful files that are then committed.
+The rule pertains to content files generated at build time, not files manually generated during setup or while creating new content.
+
+// end::rule-no-built-files[]
+
+// tag::rule-pure-asciidoc[]
+==== Keep functional code out of AsciiDoc source
+
+Perform heavy processing up front as prebuilding, then transclude those prebuilt files during render phases.
+While jekyll-asciidoc enables Liquid preprocessing in AsciiDoc files, LDOps prefers prebuilding so the generated files can service more than Jekyll builds.
+// tag::rule-pure-asciidoc[]
+
+// tag::rule-gemfile-lock[]
+==== Maintain Gemfile.lock in the repository.
+
+Whenever LiquiDoc or your application require different versions of such upstream gems, you run `bundle update` (possibly after editing your local `Gemfile`) maintain `Gemfile.lock` in source control as a means of ensuring all users develop with the same gems under the hood.
+
+// tag::rule-source-dependencies-wisely[]
+==== Source immediate application dependencies wisely.
+
+Most of LiquiDoc Ops's core Ruby dependencies are maintained by Bundler and the Gemfiles.
+This does not usually cause much of a headache.
+However, some dependencies are more directly relevant to your application codebase.
+
+For instance, by default we source a DocOps _fork_ of the link:https://github.com/asciidoctor/asciidoctor-extensions-lab[Asciidoctor Extensions Lab] and then treat it as a submodule instances of LiquiDoc Ops.
+The origin HEAD of that fork is always going to be the latest extensions with which we have tested our instance.
+
+You are welcome to fork that fork or the original.
+We sync with an upstream version of the codebase only when we need new functionality or bugfixes.
+If bugfixes are needed but not forthcoming, we can perform our own in our clone repo and submit the fork to Asciidoctor as a pull request.
+Everybody wins.
+
+These files are needed for builds, and the more problematic alternative is to copy the open-source utilities like Bootstrap, Font-Awesome, and other vendor files in the repository.
+This is legally acceptable but harder to manage.
+// tag::rule-source-dependencies-wisely[]
+
+== DocOps Primer
+
+LiquiDoc Ops is a framework for implementing enterprise DocOps strategies at scale.
+Those strategies revolve around treating docs as code and integrating heavily with product source, version control, and CI/CD.
+
+=== A Mature DocOps Environment
+
+.A Basic DocOps Overview
+image::diagram-docops-overview-macro-basic.png[]
+
+.Detailed DocOps Overview
+image::diagram-docops-overview-macro-advanced.png[]
+
+=== The Future of (Liqui)DocOps
+
+.The Customer-forkable Future of DocOps
+image::docops-overview-macro-future-forkable.png[]
+
+== Contributing
+
+This is an open source project that is seeking contributions and feedback.
+More soon, but do not hesitate to get in touch if you're eager.
+
+=== Application Development Principles
+
+As we design our framework itself, we need to understand our priorities and how we intend to approach the problem space.
+LiquiDoc Ops has two or three defining priorities that make it challenging to develop.
+We want it to be *extremely powerful out of the box*, but we also want it to be *accessible to non-developer user base*, namely technical communicators embedded in or adjacent to core engineering.
+
+As a stretch priority, we want LiquiDoc Ops to be *relatively painless and seamless* for engineers.
+So, we're talking about staying consistent with the kinds of tools and processes developers are used to, hopefully without any unnecessary complexity.
+
+Any framework is a set of opinions.
+We're talking about specific opinions: where things should go, what they should be called, how they should be formatted, and how we should talk about it all, for starters.
+Unfortunately, not many people are talking publicly about their DocOps conventions.
+That needs to change, and LiquiDoc Ops wants to kick off the conversation.
+
+==== Do not sacrifice capacity, power, or scalability.
+
+Any choice about amendments to the framework must not inhibit the capabilities of the overall platform.
+It is okay to add a feature or function that only serves a subset of use cases -- this is probably true of most aspects of any framework -- but only as long as it does not impose constraints on what the platform can accomplish.
+
+==== Balance openness and accessibility.
+
+This may sound like a reach, but the AYLO stack is a perfect example.
+The objective is to obtain the power of extensible platform technologies without going overboard on complexity and making a system too hard for target users, who include non-programmers.
+Betweeen AsciiDoc, YAML, and Liquid, each chosen technology is far from the most complicated of its kind, yet no capacity is sacrificed to a competing alternative.
+
+AsciiDoc is leagues beyond Markdown, yet it is easier to learn and more pleasant to use than reStructuredText, and it wants for little found in a complicated syntax like LaTeX or a tagged markup like DITA or DocBook.
+Anywhere AsciiDoc is lacking, the wide-open Asciidoctor toolchain enables us to make up for it.
+Where conventional AsciiDoc (or docs-as-code method more broadly) would leave us replicating source and effort, Liquid comes to the rescue.
+This is partly done by automating the heavy lifting of maintaining reference source in YAML and outputting to anything via AsciiDoc.
+
+YAML is easier to use than JSON and converts losslessly to JSON, clearly the defining format for data conveyance between applications.
+TOML or CSON might be better for configs, but YAML is every bit as suitable for configs and is in wide use for both config and data formats, including DevOps, Big Data, and many of the components of this very toolchain.
+We make YAML extensible using Liquid, enabling us to generate complex data objects from a simple core set with noted permutation factors.
+
+For its part, Liquid is a tag-based templating markup, which should make it easier to use than many.
+It is also widely implemented at the beginner level and has a proven accessibility to non-devs; plus it can do pretty much anything to text and data objects, or else we'll make it so, because it's openly extensible.
+
+We are at a great moment for documentation technology.
+One can establish a robust documentation platform entirely out of FOSS components without limiting the pool of potential users too narrow to include most technical writers, even providing an onramp for less-technical users to engage in configuration and even development of the local application.
